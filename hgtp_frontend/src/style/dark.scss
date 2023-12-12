@@ -1,0 +1,167 @@
+.dark {
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
+
+    .title {
+        color: var(--primary-light);
+    }
+
+    input {
+        color: var(--primary-light);
+    }
+
+    .openMenu {
+        background-color: var(--primary-dark);
+    }
+
+    .iconClick {
+        &:hover {
+            background-color: #333;
+        }
+    }
+
+    .navbar {
+        background-color: var(--primary-dark);
+
+        .wrapper {
+            .right {
+                .user {
+                    .options {
+                        background-color: var(--primary-dark);
+
+                        .optionItem {
+                            &:hover {
+                                background-color: #333;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .sidebar {
+        background-color: var(--primary-dark);
+
+        .wrapper {
+            .item {
+                .itemButton {
+                    &:hover {
+                        background-color: #333;
+                    }
+                }
+            }
+        }
+    }
+
+    .chartGrid {
+        stroke: rgb(160, 160, 160, 0.36);
+    }
+
+    .regulartable {
+        color: var(--primary-light);
+
+        .tableContainer {
+            background-color: var(--primary-dark);
+
+            .tableCell {
+                color: var(--primary-light);
+            }
+        }
+    }
+
+    .datatable {
+        .datagrid {
+            color: var(--primary-light);
+
+            .MuiDataGrid-sortIcon {
+                color: var(--primary-light);
+            }
+            .MuiDataGrid-menuIconButton {
+                color: var(--primary-light);
+            }
+            .MuiDataGrid-toolbarContainer .MuiButton-text {
+                color: grey;
+            }
+            .MuiDataGrid-footerContainer .MuiToolbar-root {
+                color: var(--primary-light);
+            }
+            .MuiDataGrid-footerContainer .MuiToolbar-root .Mui-disabled {
+                color: #333;
+            }
+            .MuiDataGrid-panelWrapper {
+                background-color: var(--primary-dark);
+            }
+            .MuiDataGrid-menu {
+                background-color: var(--primary-dark);
+            }
+
+            .cellAction {
+                .viewButton,
+                .deleteButton {
+                    color: var(--primary-light);
+                    border-color: var(--primary-light);
+                }
+            }
+        }
+    }
+
+    .eventCard {
+        &:hover {
+            background-color: #333;
+        }
+    }
+
+    .calendarCard {
+        --fc-list-event-hover-bg-color: #333;
+
+        --fc-border-color: #333;
+        --fc-button-text-color: var(--primary-light);
+        --fc-button-bg-color: var(--primary-dark);
+        --fc-button-border-color: var(--primary-lime-green);
+        --fc-button-hover-bg-color: var(--primary-lime-green);
+        --fc-button-hover-border-color: var(--primary-lime-green);
+        --fc-button-active-bg-color: var(--primary-lime-green);
+        --fc-button-active-border-color: var(--primary-lime-green);
+        --fc-event-bg-color: var(--primary-lime-green);
+        --fc-event-border-color: var(--primary-lime-green);
+        --fc-event-text-color: var(--primary-light);
+
+        .fc .fc-cell-shaded,
+        .fc-col-header {
+            background-color: #222;
+        }
+    }
+
+    .tasks {
+        .tasksBottom {
+            .react-kanban-board {
+                .react-kanban-column {
+                    .kanban-card {
+                        background-color: #333;
+                    }
+                }
+            }
+        }
+    }
+
+    .pagination {
+        .pagination-container {
+            .pagination-item {
+                &:hover {
+                    background-color: #222;
+                }
+
+                &.selected {
+                    background-color: #333;
+                }
+
+                &.disabled {
+                    .icon {
+                        color: gray;
+                    }
+                }
+            }
+        }
+    }
+}

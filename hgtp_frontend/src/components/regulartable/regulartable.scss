@@ -1,0 +1,42 @@
+.regulartable {
+    padding: 20px;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 4px 10px 1px rgba(160, 160, 160, 0.5);
+
+    .title {
+        margin-bottom: 20px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .tableContainer {
+        border: none;
+
+        .cellWrapper {
+            display: flex;
+            align-items: center;
+
+            .image {
+                width: 32px;
+                height: 32px;
+                border-radius: 5px;
+                margin-right: 10px;
+                object-fit: cover;
+            }
+        }
+
+        .status {
+            padding: 5px;
+            border-radius: 5px;
+
+            &.Approved {
+                color: green;
+                background-color: rgba(0, 128, 0, 0.1);
+            }
+            &.Pending {
+                color: goldenrod;
+                background-color: rgba(218, 165, 32, 0.1);
+            }
+        }
+    }
+}

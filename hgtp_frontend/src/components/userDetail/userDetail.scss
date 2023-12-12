@@ -1,0 +1,48 @@
+.userDetail {
+    flex: 2;
+    display: flex;
+    gap: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 4px 10px 1px rgba(160, 160, 160, 0.5);
+
+    .userImage {
+        .image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+
+    .userInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .userInfoTitle {
+            .infoTitle {
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            .infoDesc {
+                font-size: 18px;
+            }
+        }
+
+        .userInfoItem {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: gray;
+
+            .icon {
+                font-size: 22px;
+                text-align: center;
+            }
+        }
+    }
+}

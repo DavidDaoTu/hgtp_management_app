@@ -1,0 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+
+:root {
+    --primary-light: #fff;
+    --primary-dark: #111;
+
+    --primary-blue: #1677ff;
+    --primary-dark-blue: #5a54f9;
+    --primary-purple: #9e339f;
+    --primary-pink: #ed4192;
+    --primary-dark-red: #e0282e;
+    --primary-dark-orange: #f4801a;
+    --primary-gold: #f2bd27;
+    --primary-sea-green: #00b96b;
+    --primary-lime-green: #52c41a;
+}
+
+* {
+    font-family: "Nunito", "Ubuntu", sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+.app {
+    height: 100%;
+    width: 100%;
+}
+
+.app {
+    .link {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--primary-lime-green);
+        }
+    }
+
+    .title {
+        font-size: 16px;
+        font-weight: bold;
+        color: black;
+    }
+
+    .status {
+        margin-top: 20px;
+        padding: 5px;
+        border-radius: 5px;
+
+        &.pending {
+            color: crimson;
+            background-color: rgba(220, 20, 60, 0.1);
+        }
+        &.sold {
+            color: goldenrod;
+            background-color: rgba(218, 165, 32, 0.1);
+        }
+        &.done {
+            color: green;
+            background-color: rgba(0, 128, 0, 0.1);
+        }
+    }
+
+    .iconClick {
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+
+        .icon {
+            font-size: 20px;
+        }
+
+        &:hover {
+            background-color: #eee;
+        }
+    }
+
+    .openMenu {
+        position: absolute;
+        top: 30px;
+        right: 0;
+        z-index: 9;
+        padding: 10px;
+        background-color: white;
+        border: 1px solid lightgrey;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        color: gray;
+        width: 150px;
+
+        .menuItem {
+            border-radius: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #eee;
+                color: var(--primary-lime-green);
+            }
+
+            .item {
+                text-align: center;
+                font-size: 16px;
+            }
+
+            &.active {
+                color: var(--primary-lime-green);
+            }
+        }
+    }
+
+    .error {
+        color: red;
+        font-size: 14px;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    border-radius: 40px;
+    background-color: rgba(216, 216, 216);
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    border-radius: 4px;
+    background-color: rgba(128, 128, 128, 1);
+}

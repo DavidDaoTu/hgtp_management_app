@@ -1,0 +1,50 @@
+.sidebar {
+    flex: 1;
+    height: calc(100vh - 50px);
+    //background-color: rgb(251, 251, 255);
+    border-radius: 10px;
+    position: sticky;
+    top: 50px;
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+
+        .title {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: gray;
+        }
+
+        .item {
+            .itemButton {
+                display: flex;
+                align-items: center;
+                padding: 5px 20px 5px 10px;
+                border-radius: 10px;
+                cursor: pointer;
+
+                .icon {
+                    font-size: 25px;
+                }
+
+                span {
+                    font-size: 16px;
+                    margin-left: 10px;
+                }
+
+                &.active {
+                    font-weight: bold;
+                    padding: 5px 15px;
+                }
+
+                &:hover {
+                    background-color: #eee;
+                    padding: 5px 15px;
+                }
+            }
+        }
+    }
+}

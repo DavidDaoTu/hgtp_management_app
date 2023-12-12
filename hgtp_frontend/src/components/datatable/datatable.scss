@@ -1,0 +1,96 @@
+.datatable {
+    height: 75vh;
+    padding: 20px 20px 0 20px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 4px 10px 1px rgba(160, 160, 160, 0.5);
+
+    .datagrid {
+        border: none;
+        font-size: 14px;
+        font-weight: 400;
+
+        .MuiDataGrid-root {
+            border: none;
+        }
+        .MuiDataGrid-cell {
+            border: none;
+        }
+        .MuiDataGrid-withBorderColor {
+            border: none;
+        }
+        .MuiDataGrid-sortIcon {
+            color: black;
+        }
+        .MuiDataGrid-menuIconButton {
+            color: black;
+        }
+        .MuiDataGrid-toolbarContainer .MuiButton-text {
+            color: grey;
+        }
+        .MuiDataGrid-footerContainer .MuiToolbar-root {
+            color: black;
+        }
+
+        .cellRole {
+            padding: 5px;
+            border-radius: 5px;
+
+            &.admin {
+                background-color: rgba(220, 20, 60, 0.1);
+                color: crimson;
+            }
+            &.dev {
+                background-color: rgba(255, 105, 80, 0.1);
+                color: hotpink;
+            }
+            &.manager {
+                background-color: rgba(218, 165, 32, 0.1);
+                color: goldenrod;
+            }
+            &.sale {
+                background-color: rgba(0, 128, 0, 0.1);
+                color: green;
+            }
+        }
+
+        .cellAction {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            .viewButton {
+                width: 60px;
+                text-align: center;
+                padding: 2px 5px;
+                border-radius: 5px;
+                background-color: transparent;
+                color: darkblue;
+                border: 1px dotted rgba(0, 0, 139, 0.5);
+                cursor: pointer;
+
+                &:hover {
+                    color: white;
+                    background-color: darkblue;
+                }
+            }
+
+            .deleteButton {
+                width: 60px;
+                text-align: center;
+                padding: 2px 5px;
+                border-radius: 5px;
+                background-color: transparent;
+                color: crimson;
+                border: 1px dotted rgba(220, 20, 60, 0.5);
+                cursor: pointer;
+
+                &:hover {
+                    color: white;
+                    background-color: crimson;
+                }
+            }
+        }
+    }
+}

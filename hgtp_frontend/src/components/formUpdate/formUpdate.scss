@@ -1,0 +1,145 @@
+.formUpdate {
+    width: 100%;
+    padding: 20px;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 4px 10px 1px rgba(160, 160, 160, 0.5);
+
+    form {
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0 0 40px 0;
+            border-radius: 15px;
+            background-color: rgba(160, 160, 160, 0.5);
+            cursor: pointer;
+
+            .success {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            &:hover {
+                color: var(--primary-lime-green);
+            }
+        }
+
+        .bottom {
+            display: flex;
+
+            .left {
+                flex: 1;
+                text-align: center;
+                padding: 0 20px;
+
+                .uploadImage {
+                    label {
+                        .formUpload {
+                            margin-bottom: 20px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 10px;
+
+                            .icon {
+                                cursor: pointer;
+
+                                &:hover {
+                                    color: var(--primary-lime-green);
+                                }
+                            }
+                        }
+
+                        img {
+                            width: 100%;
+                            border-radius: 0;
+                            object-fit: cover;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                input {
+                    display: none;
+                }
+
+                .uploading {
+                    margin-top: 20px;
+                }
+            }
+
+            .right {
+                flex: 3;
+
+                .formInput {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-around;
+                    gap: 30px;
+
+                    .input {
+                        width: 40%;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+
+                        select,
+                        input {
+                            width: 100%;
+                            padding: 5px;
+                            border: none;
+                            outline: none;
+                            background-color: transparent;
+                            border-bottom: 1px solid gray;
+
+                            &::placeholder {
+                                font-size: 14px;
+                            }
+
+                            &:hover {
+                                border-color: var(--primary-lime-green);
+                            }
+                        }
+                    }
+                }
+
+                .error {
+                    margin-top: 10px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .sendButton {
+                    padding: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .button {
+                        width: 150px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        text-align: center;
+                        padding: 10px;
+                        border-radius: 5px;
+                        color: var(--primary-lime-green);
+                        border: 1px solid var(--primary-lime-green);
+                        background-color: transparent;
+                        cursor: pointer;
+                    }
+
+                    button {
+                        &:hover {
+                            color: white;
+                            background-color: var(--primary-lime-green);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
