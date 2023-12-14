@@ -19,7 +19,7 @@ COPY . .
 ## React buid for production environment (smaller size)
 RUN npm run build
 
-## Create an HTTP server based on nginx image; 
+## Create an HTTP web server based on nginx image; 
 ## default nginx server's port is 80
 ### E.g.: $ docker run -d -p 3000:80 frontend:latest
 FROM nginx:alpine

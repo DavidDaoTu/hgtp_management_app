@@ -1,7 +1,9 @@
 services:
-  frontend:
+
+  hgtp_frontend_service:
     env_file:
       - ./hgtp_frontend/.env
+    image: hgtp_frontend_img
     build:
       context: ./hgtp_frontend
       # target: development
@@ -16,31 +18,46 @@ services:
       - react-express
     # depends_on:
     #   - backend
-
-  backend:
+  
+  hgtp_reverse_proxy_service:
+    image: hgtp_reverse_proxy_img
+    build:
+      context: ./hgtp_reverse_proxy
+    ports:
+      - "8080:8080"
+    stdin_open: true
     restart: always
+    networks:
+      - react-express
+    depends_on:
+      - hgtp_frontend_service
+      - hgtp_backend_service
+
+  hgtp_backend_service:
+    image: hgtp_backend_img
     build:
       context: ./hgtp_backend
       # target: development
+    stdin_open: true
     volumes:
       - ./hgtp_backend:/usr/src/app
       - /usr/src/app/node_modules
     # depends_on:
     #   - mongo
+    restart: always
     networks:
       # - express-mongo
       - react-express
-    ports: 
-      - "8080:8080"
-#   mongo:
-#     restart: always
-#     image: mongo:4.2.0
-#     volumes:
-#       - ./data:/data/db
-#     networks:
-#       - express-mongo
-#     expose:
-#       - 27017
+
+  # mongo:
+  #   restart: always
+  #   image: mongo:4.2.0
+  #   volumes:
+  #     - ./data:/data/db
+  #   networks:
+  #     - express-mongo
+  #   expose:
+  #     - 27017
 networks:
   react-express:
   # express-mongo:
