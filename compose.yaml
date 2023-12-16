@@ -16,8 +16,8 @@ services:
     restart: always
     networks:
       - react-express
-    # depends_on:
-    #   - backend
+    depends_on:
+      - hgtp_backend_service
   
   hgtp_reverse_proxy_service:
     image: hgtp_reverse_proxy_img
@@ -34,6 +34,8 @@ services:
       - hgtp_backend_service
 
   hgtp_backend_service:
+    env_file:
+      - hgtp_backend/.env
     image: hgtp_backend_img
     build:
       context: ./hgtp_backend
@@ -42,22 +44,26 @@ services:
     volumes:
       - ./hgtp_backend:/usr/src/app
       - /usr/src/app/node_modules
-    # depends_on:
-    #   - mongo
+    depends_on:
+      - mongodb
     restart: always
     networks:
-      # - express-mongo
+      - express-mongodb
       - react-express
 
-  # mongo:
-  #   restart: always
-  #   image: mongo:4.2.0
-  #   volumes:
-  #     - ./data:/data/db
-  #   networks:
-  #     - express-mongo
-  #   expose:
-  #     - 27017
+  mongodb:
+    env_file:
+      - hgtp_backend/.env
+    restart: always
+    image: "mongodb/mongodb-community-server:6.0.8-ubi8"
+    user: root
+    volumes:
+      - ./data_db:/data/db
+    networks:
+      - express-mongodb
+    expose:
+      - 27017
+
 networks:
   react-express:
-  # express-mongo:
+  express-mongodb:

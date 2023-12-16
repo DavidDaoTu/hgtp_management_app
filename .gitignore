@@ -131,3 +131,6 @@ dist
 
 # React build folder
 build
+
+# db
+data_db
