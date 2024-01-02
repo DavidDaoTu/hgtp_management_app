@@ -63,6 +63,9 @@ HGTP's management web application
 ### V. File Storage Solutions
 1. GG Drive
 
+mount: 
+- volume, 
+- binding..
 
 2. AWS S3
 

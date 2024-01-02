@@ -1,0 +1,54 @@
+### References:
+# 1: https://github.com/kubernetes/examples/blob/412a68d90354cd6a5a5d083b0f1b919d746cc396/guestbook/frontend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hgtp-frontend
+spec:
+  selector:
+    matchLabels:
+      app: hgtp-frontend
+      tier: frontend
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: hgtp-frontend
+        tier: frontend
+    spec:
+      containers:
+        - name: hgtp-frontend
+          image: hgtp_frontend_img:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
+          envFrom:
+            - configMapRef:
+                name: app-configmap
+      restartPolicy: Always
+---
+### References:
+# 1: https://kubernetes.io/docs/concepts/services-networking/service/
+# 2. https://kubernetes.io/docs/tutorials/services/connect-applications-service/
+# 3: https://kubernetes.io/docs/concepts/services-networking/ingress/
+# 4: https://kubernetes.io/docs/tutorials/stateless-application/guestbook/#viewing-the-frontend-service-via-kubectl-port-forward
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-svc
+spec:
+  type: NodePort # Expose our app. Refer to: https://kubernetes.io/docs/tutorials/services/connect-applications-service/#exposing-the-service
+  selector:
+    app: hgtp-frontend
+    tier: frontend
+  ports:
+    - protocol: TCP
+      port: 80 # Incomming/Src port
+      targetPort: 80 # Dest container port
+      nodePort: 30000
+
