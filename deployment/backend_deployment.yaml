@@ -1,0 +1,60 @@
+### References:
+## 1. https://github.com/kubernetes/examples/blob/master/guestbook/all-in-one/guestbook-all-in-one.yaml
+## 2. https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/
+###
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hgtp-backend
+spec:
+  selector:
+    matchLabels:
+      app: hgtp-backend
+      tier: backend
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: hgtp-backend
+        tier: backend
+    spec:
+      containers:
+        - name: hgtp-backend
+          image: hgtp_backend_img:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
+          # Define environment variables for containers:
+          # Refer to: 
+          # 1. https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+          # 2. https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables
+          envFrom: 
+            - configMapRef:
+                name: app-configmap
+            - secretRef:
+                name: app-secret
+      #restartPolicy: Always
+---
+### BackEnd service
+### References:
+# 1. https://github.com/kubernetes/examples/blob/master/guestbook/redis-master-service.yaml             
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-svc
+  labels:
+    app: hgtp-backend
+    tier: backend
+spec:
+  selector:
+    app: hgtp-backend
+    tier: backend
+  ports:
+    - protocol: TCP
+      port: 8080 #By default: port = targetPort
+

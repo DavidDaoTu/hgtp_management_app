@@ -1,0 +1,91 @@
+### References:
+# 1. Kubernetes Stateful Application: https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
+# 2. Single-instance stateful application: https://kubernetes.io/docs/tasks/run-application/run-single-instance-stateful-application/
+# 3. mySQL deployment: https://github.com/kubernetes/examples/blob/master/mysql-wordpress-pd/mysql-deployment.yaml
+# 4. Persistent volume type: Local 
+#    + https://github.com/kubernetes/examples/blob/master/mysql-wordpress-pd/local-volumes.yaml
+#    + https://kubernetes.io/docs/concepts/storage/volumes/#local
+# 5. MongoDB: https://kubernetes.io/blog/2017/01/running-mongodb-on-kubernetes-with-statefulsets/
+# 6. Persistent volume type: HostPath (for single node testing only; WILL NOT WORK in a multi-node cluster; consider using local volume instead)
+#    Warning: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
+#    + hostPath example: https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume
+###
+#Step 01: Declare Persistent Volume (type, capacity, mount path...)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodb-pv-volume
+  labels:
+    type: local
+spec:
+  #storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data-mongodb"
+---
+# Step 2: Declare Persistent Volume Claims
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pv-claim
+spec:
+  #storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+# Step 03:
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+spec:
+  ports:
+  - port: 27017
+  selector:
+    app: mongodb
+  clusterIP: None
+---
+# Step 04:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+spec:
+  selector:
+    matchLabels:
+      app: mongodb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - image: mongodb/mongodb-community-server:6.0.8-ubi8
+        imagePullPolicy: IfNotPresent
+        name: mongodb
+        securityContext:
+          runAsUser: 0 #check again, no need to run as root
+        envFrom:
+        - secretRef:
+            name: app-secret
+        ports:
+        - containerPort: 27017
+          name: mongodb
+        volumeMounts:
+        - name: mongodb-persistent-storage
+          mountPath: /data/db
+      volumes:
+      - name: mongodb-persistent-storage
+        persistentVolumeClaim:
+          claimName: mongodb-pv-claim
+
+
+

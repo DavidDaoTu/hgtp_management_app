@@ -30,8 +30,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: app-configmap
-      restartPolicy: Always
+      #restartPolicy: Always
 ---
+### FrontEnd service
 ### References:
 # 1: https://kubernetes.io/docs/concepts/services-networking/service/
 # 2. https://kubernetes.io/docs/tutorials/services/connect-applications-service/
