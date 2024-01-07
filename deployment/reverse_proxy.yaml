@@ -1,0 +1,57 @@
+### References:
+# 1. Connect a Frontend to a Backend: https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/
+# 2. Connect applications with services: https://kubernetes.io/docs/tutorials/services/connect-applications-service/#the-kubernetes-model-for-connecting-containers
+###
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reverse-proxy
+spec:
+  selector:
+    matchLabels:
+      service: reverse-proxy
+      tier: middle-tier
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        service: reverse-proxy
+        tier: middle-tier
+    spec:
+      containers:
+        - name: reverse-proxy-nginx
+          image: hgtp_reverse_proxy_img:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"       
+          ports:
+          - containerPort: 8080
+      restartPolicy: Always
+---
+# reverse-proxy service
+# Reference:
+# 1. Access a service by DNS name: https://kubernetes.io/docs/tutorials/services/connect-applications-service/#dns
+# 2. DNS debug util: https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/
+#    + Example: kubectl exec -i -t dnsutils -- nslookup backend-svc
+apiVersion: v1
+kind: Service
+metadata:
+  name: reverse-proxy   # DNS service name for Frontend's connection
+spec:
+  selector:             # Select the reverse-proxy deployment above
+    service: reverse-proxy
+    tier: middle-tier
+  type: NodePort 
+  ports:
+    - name: "reverse-proxy-port-8080"
+      protocol: TCP     # Default network protocol
+      port: 8080        # Default targetPort = port
+      nodePort: 30080   # Expose to host machine port
+  
+
+

@@ -39,11 +39,11 @@ spec:
     requests:
       storage: 5Gi
 ---
-# Step 03:
+# Step 03: MongoDB service
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb
+  name: mongodb-svc # DNS service name for other connections
 spec:
   ports:
   - port: 27017
@@ -51,7 +51,7 @@ spec:
     app: mongodb
   clusterIP: None
 ---
-# Step 04:
+# Step 04: MongoDB Deployment (Future, should be used with statefulSet)
 apiVersion: apps/v1
 kind: Deployment
 metadata:

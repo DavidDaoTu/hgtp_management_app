@@ -43,10 +43,11 @@ spec:
 ### BackEnd service
 ### References:
 # 1. https://github.com/kubernetes/examples/blob/master/guestbook/redis-master-service.yaml             
+# 2. Access a service by DNS: https://kubernetes.io/docs/tutorials/services/connect-applications-service/#dns
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-svc
+  name: backend-svc # The DNS name is "backend-svc", which is the value of the name field.
   labels:
     app: hgtp-backend
     tier: backend

@@ -30,6 +30,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: app-configmap
+          lifecycle:
+            # Testing purposes for future use
+            # postStart:
+            #   exec:
+            #     command: ["/usr/sbin/nginx","-s","reload"]
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx","-s","quit"]
       #restartPolicy: Always
 ---
 ### FrontEnd service
@@ -43,13 +51,15 @@ kind: Service
 metadata:
   name: frontend-svc
 spec:
-  type: NodePort # Expose our app. Refer to: https://kubernetes.io/docs/tutorials/services/connect-applications-service/#exposing-the-service
+  # Expose our app. 
+  # Refer to: https://kubernetes.io/docs/tutorials/services/connect-applications-service/#exposing-the-service
+  type: NodePort          
   selector:
     app: hgtp-frontend
     tier: frontend
   ports:
     - protocol: TCP
-      port: 80 # Incomming/Src port
-      targetPort: 80 # Dest container port
-      nodePort: 30000
+      port: 80            # Incomming/Source port
+      targetPort: 80      # Destination container port
+      nodePort: 30000     # Host machine port
 

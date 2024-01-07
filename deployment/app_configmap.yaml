@@ -1,5 +1,8 @@
 ### References:
 # 1. https://kubernetes.io/docs/concepts/configuration/configmap/
+# 2. https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+# 3. Restrictions:
+#    + https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#restrictions
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,8 +10,9 @@ metadata:
 data:
   # Environment Variables (Key-Value pairs)
   # property-like keys; each key maps to a simple value
-  # FrontEnd Environment Variables
-  REACT_APP_BASE_URL: http://localhost:8080/api
+  ## Environment Variables for FrontEnd
+  # 1. Backend URL
+  # REACT_APP_BASE_URL: http://reverse-proxy:8080/api  #Note: Not working now
   
 
 

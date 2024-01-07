@@ -1,0 +1,17 @@
+### Rerferences:
+# 1. Compose build specs: https://docs.docker.com/compose/compose-file/build/
+services:
+  reverseproxy:
+    build:
+      context: ./hgtp_reverse_proxy
+    image: hgtp_reverse_proxy_img:latest
+
+  backend:
+    build:
+      context: ./hgtp_backend
+    image: hgtp_backend_img:latest
+
+  frontend:
+    build:
+      context: ./hgtp_frontend
+    image: hgtp_frontend_img:latest

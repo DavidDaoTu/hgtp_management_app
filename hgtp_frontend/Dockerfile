@@ -24,5 +24,12 @@ RUN npm run build
 ### E.g.: $ docker run -d -p 3000:80 frontend:latest
 FROM nginx:alpine
 
+### Reference for connecting Frontend to Backend 
+# 1. https://github.com/kubernetes/website/blob/main/content/en/examples/service/access/Dockerfile
+# 2. https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/
+# RUN rm /etc/nginx/conf.d/default.conf
+# COPY frontend-nginx.conf /etc/nginx/conf.d
+# COPY frontend-nginx.conf /etc/nginx/nginx.conf
+
 ## Copy frontend's build folder to nginx server's default folder
 COPY --from=development /usr/src/app/build /usr/share/nginx/html

@@ -33,15 +33,29 @@ HGTP's management web application
 ### IV. Databases Solutions
 1. MongoDB localhost/on-premise ?
    - How to seed the DB by code?
-     + Manually seed by "mongosh": Make sure mongosh container is on the same network with mongodb container
+     + Connection string format: https://www.mongodb.com/docs/v3.0/reference/connection-string/#standard-connection-string-format
+     + Manually seed by "mongosh": 
+       - If MongoDB is running on Docker, make sure mongosh container is on the same network with mongodb container:
        
-       ```bash 
-       $ docker run --rm --name mongosh --network hgtp_management_app_express-mongodb -it mongodb/mongodb-community-server:6.0.8-ubi8 mongosh "mongodb://user:pass@mongodb"
-       $ show dbs
-       $ use test
-       $ show collections
-       $ db.users.insertOne({"username":"admin", "password":"admin", "role":"admin", "name":"admin"})
-       ```
+         ```bash 
+         $ docker run --rm --name mongosh --network hgtp_management_app_express-mongodb -it mongodb/mongodb-community-server:6.0.8-ubi8 mongosh "mongodb://user:pass@mongodb"
+         $ show dbs
+         $ use test
+         $ show collections
+         $ db.users.insertOne({"username":"admin", "password":"admin", "role":"admin", "name":"admin"})
+         ```
+       
+       - If MongoDB is running on Kubernetes (K8S), with a service named "mongodb-svc":
+         ```bash
+         $ kubectl get pods
+         $ kubectl get svc
+         $ kubectl run -it --rm --image=mongodb/mongodb-community-server:6.0.8-ubi8 --restart=Never mongosh -- mongosh "mongodb://admin:admin@mongodb-svc"
+         $ show dbs
+         $ use test
+         $ show collections
+         $ db.users.insertOne({"username":"admin", "password":"admin", "role":"admin", "name":"admin"})
+       
+         ```
    - How to manipulate the DB? (manually? from code): 
      - https://www.mongodb.com/developer/products/mongodb/cheat-sheet/
      - https://www.tutorialspoint.com/mongodb/mongodb_query_document.htm
