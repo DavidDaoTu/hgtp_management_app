@@ -75,10 +75,11 @@ const login = async (req, res) => {
         const { password, ...info } = user._doc;
         return res
             .cookie("accessToken", accessToken, {
+                // Tu commented; plz check again
                 httpOnly: true,
-                secure: true,
+                secure: false,
                 // maxAge: 24 * 60 * 60 * 1000,
-                sameSite: "none",
+                //sameSite: "none",
             })
             .status(200)
             .json(info);
@@ -90,8 +91,9 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
     return res
         .clearCookie("accessToken", {
-            sameSite: "none",
-            secure: true,
+            // Tu commented; plz check again
+            //sameSite: "none",
+            //secure: false,
         })
         .status(200)
         .json("Logout successful");
