@@ -10,7 +10,7 @@
 #    Warning: https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
 #    + hostPath example: https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume
 ###
-#Step 01: Declare Persistent Volume (type, capacity, mount path...)
+# Step 01: Declare a Persistent Volume (type, capacity, mount path...)
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -23,8 +23,19 @@ spec:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data-mongodb"
+  #hostPath:    # not recommended
+  local:        # recommended
+    path: "/mnt/local/mongodb"
+  nodeAffinity: # used with local volume
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          # Node's hostname! 
+          # TODO: Remember to change this to the real deployed hostname
+          - tudao-ideapad-5-pro-14iap7 
 ---
 # Step 2: Declare Persistent Volume Claims
 apiVersion: v1
@@ -81,7 +92,7 @@ spec:
           name: mongodb
         volumeMounts:
         - name: mongodb-persistent-storage
-          mountPath: /data/db
+          mountPath: /data/db  # Container's path
       volumes:
       - name: mongodb-persistent-storage
         persistentVolumeClaim:
