@@ -1,7 +1,112 @@
-# hgtp_management_app
+# HGTP Management Applications
 HGTP's management web application
 
-## Works need to improve
+## Basic Local Setup for Development
+> Don't be upset or frustrated if you get many errors. =)) You are not alone!
+
+- Step #1: **Install** the Kubernetes and  on the local machine. Please refer to [this document](https://github.com/DavidDaoTu/docker_k8s_training/blob/main/k8s_deployment/NOTES.md). Basically, run the following script [install_k8s.sh](https://github.com/DavidDaoTu/docker_k8s_training/blob/main/k8s_deployment/k8s_installation_init_cluster/install_k8s.sh)
+
+
+
+- Step #2: **Initialize** the Control Plane on the master node. Run the following script [init_master.sh](https://github.com/DavidDaoTu/docker_k8s_training/blob/main/k8s_deployment/k8s_installation_init_cluster/init_master.sh)
+
+
+
+- Step #3: Go to the folder "[deployment](./deployment/)" and run he following commands to deploy our application on the cluster
+```bash
+$ kubectl get nodes
+# Output should look like following: (If not, we need to fix errors: such as run $ sudo swapoff -a)
+# ----
+# NAME                         STATUS   ROLES           AGE     VERSION
+# tudao-ideapad-5-pro-14iap7   Ready    control-plane   7d12h   v1.29.0
+$ kubectl get pods
+# Apply all YAML files. This should have an error for the first time, because of lacking Docker images.
+$ kubectl apply -f . 
+#### or to apply a specific deployment YAML file. See:
+# $ kubectl apply -f frontend_deployment.yaml
+```
+
+
+- Step #4: Comeback to the **root/parent project folder**. Using docker compose to build our application images.
+```bash
+$ docker image prune --all #delete all unsed images
+$ docker images
+# build apps images (local repo only, we will push to Docker hub repo later)
+$ docker compose -f docker-compose-build.yaml build --parallel
+
+###### Use the below command to update new Docker images for K8S deployments
+$ kubectl rollout restart deployment hgtp-backend hgtp-frontend reverse-proxy
+```
+   Go to the step #3 to apply our deployments file then go to the next step to debbug pods/deployments/volumes...
+
+
+   
+- Step #5: Troubleshooting/Debugging:
+```bash
+# Get all deployments, pods, service
+$ kubectl get deployments -o wide
+$ kubectl get pods -o wide
+$ kubectl get svc -o wide
+
+# Describe pods configurations;
+$ kubectl describe pods
+# Describe service to check port mappings of deployments
+$ kubectl describe svc
+
+# Get live logs of pods
+$ kubectl get pods
+$ kubectl logs -f kubectl logs -f hgtp-frontend-5989dcf458-rs6fj
+
+# Get all persistent volumes (PV) & describe the PV info
+$ kubectl get pv -o wide
+$ kubectl describe pv 
+## The same commands for persistent volume claim (PVC), configmap, secret
+$ kubectl get pvc -o wide
+$ kubectl describe pvc
+
+#####
+# Get a Shell access to pods
+$ kubectl get pods
+$ kubectl exec -it  hgtp-frontend-685f747576-nvftd -- /bin/sh 
+
+```
+> Note: Currently, we use ".env" file and build it with hgtp_frontend image. So, please create a file ".env" in hgtp_frontend with the following content:
+```bash
+# .env file in hgtp_frontend. Build Docker frontend image
+# This is not a good practice. We will solve this later
+# If we have a domain
+# REACT_APP_BASE_URL=http://hostapi.hgtp.net:30080/api 
+# If not
+REACT_APP_BASE_URL=http://localhost:30080/api 
+REACT_APP_CLOUDINARY_URL= 
+REACT_APP_CLOUDINARY_PRESET=
+```
+
+- Step #6: Access the web app
+```bash
+$ kubectl get svc
+## Output looks like:
+# NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+# backend-svc     ClusterIP   10.111.13.52     <none>        8080/TCP         4d1h
+# frontend-svc    NodePort    10.101.176.60    <none>        80:30000/TCP     4d1h
+# kubernetes      ClusterIP   10.96.0.1        <none>        443/TCP          7d13h
+# mongodb-svc     ClusterIP   None             <none>        27017/TCP        4d1h
+# reverse-proxy   NodePort    10.108.211.202   <none>        8080:30080/TCP   4d1h
+```
+   Open browser & access to: http://localhost:30000/
+
+- Step #7: Import the Mongodb's json for database seeding.
+  
+  + Install the MongoDB Compass GUI: https://www.mongodb.com/products/tools/compass
+  
+  + Then, run the following commands:
+```bash
+$ kubectl get svc
+$ kubectl port-forward service/mongodb-svc 28015:27017 &
+```
+   Open Compass GUI & see [the guideline](https://github.com/DavidDaoTu/docker_k8s_training/blob/main/k8s_deployment/NOTES.md#2-run-a-stateful-applications-using-a-deployment)
+
+## Works need to improve in future
 ### I. Front-End
 1. Stop moving image on the landing page
 2. Chua co responsive ---> @media
