@@ -36,7 +36,8 @@ spec:
           values:
           # Node's hostname! 
           # TODO: Remember to change this to the real deployed hostname
-          - tudao-ideapad-5-pro-14iap7 
+          #- tudao-ideapad-5-pro-14iap7 
+          - admin
 ---
 # Step 2: Declare Persistent Volume Claims
 apiVersion: v1
