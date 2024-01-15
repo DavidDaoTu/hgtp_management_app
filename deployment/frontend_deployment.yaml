@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
         - name: hgtp-frontend
-          image: hgtp_frontend_img:latest
-          imagePullPolicy: IfNotPresent
+          image: davidfullstack/hgtp_frontend_img:latest
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 100m
