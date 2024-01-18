@@ -2,7 +2,7 @@
 HGTP's management web application
 
 ## Basic Local Setup for Development
-> Don't be upset or frustrated if you get many errors. =)) You are not alone!
+> Don't be upset or frustrated if you got many errors. =)) You are not alone!
 
 - Step #1: **Install** the Kubernetes and  on the local machine. Please refer to [this document](https://github.com/DavidDaoTu/docker_k8s_training/blob/main/k8s_deployment/NOTES.md). Basically, run the following script [install_k8s.sh](https://github.com/DavidDaoTu/docker_k8s_training/blob/main/k8s_deployment/k8s_installation_init_cluster/install_k8s.sh)
 
@@ -32,7 +32,7 @@ $ kubectl apply -f .
 $ docker image prune --all #delete all unsed images
 $ docker images
 # build apps images (local repo only, we will push to Docker hub repo later)
-$ docker compose -f docker-compose-build.yaml build --parallel
+$ docker compose -f local-docker-compose-build.yaml build --parallel
 
 ###### Use the below command to update new Docker images for K8S deployments
 $ kubectl rollout restart deployment hgtp-backend hgtp-frontend reverse-proxy
@@ -105,6 +105,11 @@ $ kubectl get svc
 $ kubectl port-forward service/mongodb-svc 28015:27017 &
 ```
    Open Compass GUI & see [the guideline](https://github.com/DavidDaoTu/docker_k8s_training/blob/main/k8s_deployment/NOTES.md#2-run-a-stateful-applications-using-a-deployment)
+
+## Deployment Process
+
+
+
 
 ## Works need to improve in future
 ### I. Front-End
