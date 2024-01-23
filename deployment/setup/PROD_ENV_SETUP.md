@@ -65,38 +65,57 @@ Then, run the following on all **worker nodes**:
 
 Please see [00-installer-config.yaml](./networking/static_ip_netplan/00-installer-config.yaml) for more details.
 
-Using "netplan" utility to configure static IP addresses. Basic steps:
-- Step 01: Get Ethernet interfaces (LAN)
-- Step 02:
+Using "**netplan**" utility to configure static IP addresses. Basic steps:
+- Step #1: Get Ethernet interfaces (LAN)
+    ```bash
+        $ ifconfig
+        ##### the interfaces look like: eth0, enp2s0...
+    ```
+- Step #2: Edit the configuration file as the example file: **"[/etc/netplan/00-installer-config.yaml](./networking/static_ip_netplan/00-installer-config.yaml)"**
+    ```bash
+        $ sudo cp /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.original
+        $ sudo nano /etc/netplan/00-installer-config.yaml
+        ##### Edit the file as the example file
+        $ sudo netplan try
+    ```
 
 
-
-
-## Step 04: Setup A Local DNS and Customer Domain Names For Webserver and APIHost
+## Step 04: Set Up A Local DNS and Customer Domain Names For Webserver and APIHost
 
 Using a lightweight DNS service, which is "dnsmasq"
-- Step 01: Install dnsmasq service
-- Step 02: Configure dnsmasq by editing "/etc/dnsmasq.conf"
+- Step #1: Install dnsmasq service
   ```bash
-    $ 
-    $ 
+    $ sudo apt-get update
+    $ sudo apt-get install dnsmasq
   ```
-
-
-
+- Step #2: Configure dnsmasq by editing the config as the example file: **"[/etc/dnsmasq.conf](./networking/local_dns/dnsmasq.conf)"**
+  ```bash
+    $ sudo cp /etc/dnsmasq.conf /etc/dnsmasq.conf.original
+    $ sudo nano /etc/dnsmasq.conf
+    ##### Edit the file as the example
+    $ sudo systemctl restart dnsmasq.service
+    $ sudo systemctl status dnsmasq.service
+  ```
+If we have multiple DNS services running on the same PC. We will get the errors resulted from using the same port 53. Please see the [**fix here**](./networking/local_dns/FIX_DNS.md)
 
 ## Step 05: Redirect Our Custom Domain Name URL to Our Webserver Port 30000 in K8S Cluster
 
 Assumption: Apache2 webserver is running on the Production server.
+Install Apache2:
+```bash
+$ sudo apt update
+$ sudo apt install apache2
+$ sudo systemctl status apache2
 
-- Step 01: **Enable mod_proxy**
+```
+- Step #1: **Enable mod_proxy**
     ```bash
     $ sudo a2enmod proxy 
     $ sudo a2enmod proxy_http 
-    $ sudo systemctl restart apache2
+    $   
     ```
-- Step 02: Configure **"ProxyPass"** for Apache
-Edit our Apache configration file: "/etc/apache2/sites-available/000-default.conf"
+- Step #2: Configure **"ProxyPass"** for Apache
+Edit our Apache configration as the example file: **"[/etc/apache2/sites-available/000-default.conf](./networking/local_dns/000-default.conf)"**
 
     ```yaml
         <VirtualHost *:80> 
@@ -111,6 +130,15 @@ Edit our Apache configration file: "/etc/apache2/sites-available/000-default.con
 For more details, see the example file [000-default.conf](./networking/local_dns/000-default.conf)
 
 
-## Step 06: Setup NFS server on the Master Node
+## Step 06: Configure the main local router
 
-## Step 07: 
+
+This step is very specific to each router brand. However, there are 02 basic steps:
+- Configure the static primary DNS IP
+- Add routing to that IP
+
+
+## Step 07: Setup NFS server on the Master Node
+
+
+
