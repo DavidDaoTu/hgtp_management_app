@@ -227,7 +227,7 @@ const updateProduct = async (req, res) => {
                 },
             }
         );
-        return res.status(202).json("Update successful");
+        return res.status(200).json("Update successful");
     } catch (err) {
         return res.status(500).json(err.message);
     }
