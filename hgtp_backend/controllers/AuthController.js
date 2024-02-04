@@ -60,11 +60,11 @@ const login = async (req, res) => {
         }
         // Check password
         if (isBcrypt) {
-            if (bcrypt.compareSync(user.password, req.body.password)) {
+            if (!bcrypt.compareSync(req.body.password, user.password)) {
                 return res.status(400).json("Invalid username or password");
             }
         } else {
-            if (user.password !== req.body.password) {
+        if (user.password !== req.body.password) {
                 return res.status(400).json("Invalid username or password");
             }
         }
@@ -124,10 +124,16 @@ const changePassword = async (req, res) => {
     // Get old password and change password
     let oldPassword = req.body.oldPassword;
     let newPassword = req.body.newPassword;
+    let rePassword = req.body.rePassword;
 
     try {
-        if (!oldPassword || !newPassword) {
+        if (!oldPassword || !newPassword || !rePassword) {
             return res.status(401).json("Missing input");
+        }
+        if (rePassword !== newPassword) {
+            return res
+                .status(401)
+                .json("Confirm password must be the same as new password");
         }
         if (newPassword === oldPassword) {
             return res
@@ -142,11 +148,11 @@ const changePassword = async (req, res) => {
         }
 
         if (isBcrypt) {
-            if (bcrypt.compareSync(user.password, oldPassword)) {
+            if (!bcrypt.compareSync(oldPassword, user.password)) {
                 return res.status(401).json("Invalid password");
             }
             // Save new password
-            user.password = bcrypt.hashSync(password, 6);
+            user.password = bcrypt.hashSync(newPassword, 6);
         } else {
             if (oldPassword !== user.password) {
                 return res.status(401).json("Invalid password");

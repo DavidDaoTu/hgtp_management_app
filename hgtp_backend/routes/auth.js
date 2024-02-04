@@ -19,14 +19,19 @@ router.post("/login", AuthController.login);
 router.post("/logout", AuthController.logout);
 
 router.put(
+    "/change_password",
+    verifyByCookies,
+    multer.single("image"),
+    AuthController.changePassword
+);
+
+router.put(
     "/:id",
     verifyByCookies,
     multer.single("image"),
     cloudinaryUpload,
     AuthController.updateProfile
 );
-
-router.post("/change_password", verifyByCookies, AuthController.changePassword);
 
 router.get("/cloudinary/generate", cloudinaryGenerate);
 router.post("/cloudinary/upload", multer.single("image"), cloudinaryUpload);
