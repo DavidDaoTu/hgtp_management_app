@@ -204,6 +204,7 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const productId = req.params.productId;
+
     try {
         // Find if product already exists
         const productExists = await Product.findOne({
@@ -222,8 +223,10 @@ const updateProduct = async (req, res) => {
             { productId: productId },
             {
                 $set: {
-                    updatedBy: req.userId,
                     ...req.body,
+                    updatedBy: req.userId,
+                    cover: req.image,
+                    images: req.image,
                 },
             }
         );
