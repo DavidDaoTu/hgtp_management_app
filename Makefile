@@ -1,0 +1,54 @@
+###References:
+#1. https://github.com/kubernetes/examples/blob/master/cassandra/Makefile
+#2. https://github.com/kubernetes/examples/blob/master/guestbook-go/Makefile
+#3. https://github.com/kubernetes/examples/blob/master/staging/explorer/Makefile
+#4. https://github.com/kubernetes/examples/blob/master/guestbook/php-redis/Makefile
+#5. https://github.com/kubernetes/examples/blob/master/staging/https-nginx/Makefile
+#####
+
+#### Build Docker images for local development & release phases
+
+# Usage:
+#   $ make dev
+#   $ make release [VERSION=6] [REGISTRY="davidfullstack"]
+
+VERSION?=v1.0.1
+DOCKERHUB?=davidfullstack
+
+## Get current branch & commit ID to save to .env file for each release traces
+current_branch:=`git branch --show-current`
+commit_id:=`git rev-parse HEAD`
+
+release: clean release_env build push
+dev: clean local_env build
+
+# Add Docker compose environment variables into .env file for local development
+local_env:
+	@echo "### LOCAL DEVELOPMENT ###" > .env
+	@echo "VERSION=${VERSION}\r\nREGISTRY=local" >> .env 
+	@echo "Building Docker images for local dev: image version '$(VERSION)'..."
+
+# Add Docker compose environment variables into .env file for release
+release_env:
+	@echo "### RELEASE ###" > .env
+	@echo "VERSION=${VERSION}\r\nREGISTRY=${DOCKERHUB}" >> .env 
+	@echo "Building Docker images for release: image version '$(VERSION)' with remote '$(DOCKERHUB)'..."
+
+# Common Docker compose build for local dev & release
+build:
+	@echo "-----------" >> .env
+	@echo "#Current Branch: ${current_branch}\r\n#Current Commit ID: ${commit_id}" >> .env
+	@echo "#Build at time: $(shell date +'%Y-%m-%d %H:%M:%S')" >> .env
+	docker compose -f docker-compose-build.yaml build --parallel
+
+# push the image to an registry
+push:
+	docker compose -f docker-compose-build.yaml push
+
+# remove previous images and containers
+clean:
+	@echo "Removing unused Docker images..."
+	yes | docker image prune --all
+
+.PHONY: release clean build_local build_rel push
+

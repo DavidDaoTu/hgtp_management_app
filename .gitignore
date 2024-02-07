@@ -134,3 +134,6 @@ build
 
 # db
 data_db
+
+# vscode ctags
+.vscode-ctags
