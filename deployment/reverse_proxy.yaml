@@ -24,7 +24,7 @@ spec:
           # image: davidfullstack/hgtp_reverse_proxy_img:latest
           # imagePullPolicy: Always
           ### For local development
-          image: hgtp_reverse_proxy_img
+          image: local/hgtp_reverse_proxy_img:v1.0.1
           imagePullPolicy: IfNotPresent
           resources:
             requests:

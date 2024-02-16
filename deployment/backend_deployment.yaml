@@ -24,7 +24,7 @@ spec:
           # image: davidfullstack/hgtp_backend_img:latest
           # imagePullPolicy: Always
           ### For local development
-          image: hgtp_backend_img
+          image: local/hgtp_backend_img:v1.0.1
           imagePullPolicy: IfNotPresent
           resources:
             requests:
