@@ -8,6 +8,7 @@ import dateFormat from "dateformat";
 import * as XLSX from "xlsx";
 import fileExcel from "assets/files/default.xlsx";
 import { getDateFromExcelDateNumber } from "utils/format.helper";
+import { getStatusMessage } from "utils/common";
 
 const productColumns = [
   {
@@ -78,7 +79,9 @@ const productColumns = [
     flex: 1,
     renderCell: (params) => {
       return (
-        <div className={`status ${params.row.status}`}>{params.row.status}</div>
+        <div className={`status ${params.row.status}`}>
+          {getStatusMessage(params.row.status)}
+        </div>
       );
     },
   },
@@ -135,6 +138,7 @@ const Products = () => {
               arrivalDate: getDateFromExcelDateNumber(value["__EMPTY_2"]),
               desc: value["__EMPTY_8"],
               port: value["__EMPTY_4"],
+              status: "pending",
               id: key++,
             };
           })
@@ -152,12 +156,13 @@ const Products = () => {
               deliveryDate: getDateFromExcelDateNumber(value["Ngày giao hàng"]),
               desc: value["Note"],
               port: value["Cảng"],
+              status: "done",
               id: key++,
             };
           })
           .filter((value) => value.productId);
 
-        setProductsData([...pendingProducts, ...deliveredProducts]);
+        setProductsData([...deliveredProducts, ...pendingProducts]);
       };
     }
   };

@@ -11,7 +11,7 @@ import { useRef, useState } from "react";
 import { formatDate } from "utils/format.helper";
 
 const today = new Date();
-const thisMonth = dateFormat(today, "mmmm").toUpperCase();
+const thisMonth = dateFormat(today, "mm").toUpperCase();
 const thisMonthNum = today.getMonth() + 1;
 const thisYearNum = today.getFullYear();
 
@@ -298,7 +298,7 @@ const Home = () => {
                         />
                     ) : (
                         <Chart
-                            title={`KPI ${thisMonth} ${thisYearNum}`}
+                            title={`KPI tháng ${thisMonth} ${thisYearNum}`}
                             aspect={2 / 1}
                             data={dataKpiChart}
                             initChart="BarChart"
