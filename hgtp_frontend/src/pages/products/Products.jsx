@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { apiRequest } from "utils/apiAxios";
 import dateFormat from "dateformat";
 import { formatDate } from "utils/format.helper";
+import { getStatusMessage } from "utils/common";
 
 const productColumns = [
     {
@@ -86,7 +87,7 @@ const productColumns = [
         renderCell: (params) => {
             return (
                 <div className={`status ${params.row.status}`}>
-                    {params.row.status}
+                    {getStatusMessage(params.row.status)}
                 </div>
             );
         },

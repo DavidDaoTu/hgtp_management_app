@@ -12,6 +12,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
 import Pagination from "components/pagination/Pagination";
+import { getStatusMessage } from "utils/common";
 
 const tableColumns = [
     "",
@@ -90,7 +91,7 @@ const Regulartable = ({ title, products, pageSize = 15 }) => {
                                             <span
                                                 className={`status ${row.status}`}
                                             >
-                                                {row.status}
+                                                {getStatusMessage(row.status)}
                                             </span>
                                         </TableCell>
                                     </TableRow>

@@ -26,7 +26,7 @@ const StatisticsCard = ({ stat }) => {
     return (
         <div className="statisticsCard" id="statistics">
             <div className="statTop">
-                <h1 className="title">{title}</h1>
+                <h1 className="title">{title.toUpperCase()}</h1>
                 <div className="iconClick" onClick={() => setOpen(!open)}>
                     <MoreVert className="icon" />
                 </div>

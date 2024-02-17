@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { apiRequest } from "utils/apiAxios";
 import defaultImage from "assets/images/no-image.jpg";
 import dateFormat from "dateformat";
+import { getStatusMessage } from "utils/common";
 
 const ProductDetail = ({ product }) => {
     const { isLoading, error, data } = useQuery({
@@ -40,18 +41,18 @@ const ProductDetail = ({ product }) => {
                 )}
                 {product?.price && (
                     <div className="itemDetail">
-                        <span>Price: {product?.price}</span>
+                        <span>Giá bán: {product?.price}</span>
                     </div>
                 )}
                 {product?.deposit && (
                     <div className="itemDetail">
-                        <span>Deposit: {product?.deposit}.000.000</span>
+                        <span>Đặt cọc: {product?.deposit}.000.000</span>
                     </div>
                 )}
                 {product?.saleDate && (
                     <div className="itemDetail">
                         <span>
-                            {"Sale date: "}
+                            {"Ngày bán: "}
                             {dateFormat(product?.saleDate, "dd-mm-yyyy")}
                         </span>
                     </div>
@@ -59,7 +60,7 @@ const ProductDetail = ({ product }) => {
                 {product?.arrivalDate && (
                     <div className="itemDetail">
                         <span>
-                            {"Arrival date: "}
+                            {"Ngày hàng về: "}
                             {dateFormat(product?.arrivalDate, "dd-mm-yyyy")}
                         </span>
                     </div>
@@ -67,25 +68,25 @@ const ProductDetail = ({ product }) => {
                 {product?.deliveryDate && (
                     <div className="itemDetail">
                         <span>
-                            {"Delivery date: "}
+                            {"Ngày giao hàng: "}
                             {dateFormat(product?.deliveryDate, "dd-mm-yyyy")}
                         </span>
                     </div>
                 )}
                 {product?.port && (
                     <div className="itemDetail">
-                        <span>Port: {product?.port}</span>
+                        <span>Cảng: {product?.port}</span>
                     </div>
                 )}
                 {product?.document && (
                     <div className="itemDetail">
-                        <span>Document: {product?.document}</span>
+                        <span>Bill: {product?.document}</span>
                     </div>
                 )}
                 {product?.status && (
                     <div className="itemDetail">
                         <span className={`status ${product?.status}`}>
-                            {product?.status}
+                            {getStatusMessage(product?.status)}
                         </span>
                     </div>
                 )}

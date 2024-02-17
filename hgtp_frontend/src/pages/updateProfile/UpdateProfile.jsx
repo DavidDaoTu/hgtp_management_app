@@ -27,7 +27,7 @@ const UpdateProfile = () => {
     return (
         <div className="updateProfile">
             <div className="top">
-                <h1 className="title">Edit User</h1>
+                <h1 className="title">Cập nhật thông tin</h1>
             </div>
             {isLoading ? (
                 "Loading..."
