@@ -27,9 +27,9 @@ dev: clean local_env build
 # Build for release then push to DockerHub registry
 release: clean release_env build push
 # Restart & deploy K8S YAML files
-deploy: reset_k8s restart_k8s deployment_k8s
+deploy: reset_k8s restart_k8s dev deployment_k8s
 # Update Docker images for K8S Deployments
-update: update_docker_imgs
+update: dev update_docker_imgs
 
 # Add Docker compose environment variables into .env file for local development
 local_env:
