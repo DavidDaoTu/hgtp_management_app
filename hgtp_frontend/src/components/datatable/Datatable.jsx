@@ -48,7 +48,7 @@ const Datatable = ({ target, rows, columns, name }) => {
                                 }
                             }}
                         >
-                            View
+                            Xem
                         </button>
 
                         <button
@@ -67,7 +67,7 @@ const Datatable = ({ target, rows, columns, name }) => {
                                 }
                             }}
                         >
-                            Delete
+                            Xóa
                         </button>
                     </div>
                 );

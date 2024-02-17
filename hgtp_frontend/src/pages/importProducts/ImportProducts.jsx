@@ -135,6 +135,7 @@ const Products = () => {
               arrivalDate: getDateFromExcelDateNumber(value["__EMPTY_2"]),
               desc: value["__EMPTY_8"],
               port: value["__EMPTY_4"],
+              status: "pending",
               id: key++,
             };
           })
@@ -152,12 +153,13 @@ const Products = () => {
               deliveryDate: getDateFromExcelDateNumber(value["Ngày giao hàng"]),
               desc: value["Note"],
               port: value["Cảng"],
+              status: "done",
               id: key++,
             };
           })
           .filter((value) => value.productId);
 
-        setProductsData([...pendingProducts, ...deliveredProducts]);
+        setProductsData([...deliveredProducts, ...pendingProducts]);
       };
     }
   };
