@@ -10,7 +10,10 @@
 
 # Usage:
 #   $ make dev
+#   $ make deploy
+#	$ make update
 #   $ make release [VERSION=6] [REGISTRY="davidfullstack"]
+####
 
 VERSION?=v1.0.1
 DOCKERHUB?=davidfullstack
@@ -19,8 +22,14 @@ DOCKERHUB?=davidfullstack
 current_branch:=`git branch --show-current`
 commit_id:=`git rev-parse HEAD`
 
-release: clean release_env build push
+# Local build for development
 dev: clean local_env build
+# Build for release then push to DockerHub registry
+release: clean release_env build push
+# Restart & deploy K8S YAML files
+deploy: reset_k8s restart_k8s deployment_k8s
+# Update Docker images for K8S Deployments
+update: update_docker_imgs
 
 # Add Docker compose environment variables into .env file for local development
 local_env:
@@ -49,6 +58,25 @@ push:
 clean:
 	@echo "Removing unused Docker images..."
 	yes | docker image prune --all
+
+# reset & restart k8s cluster
+reset_k8s:
+	@echo "Resetting K8S Cluster..."
+	/bin/bash ./deployment/setup/k8s/reset_cluster.sh
+
+restart_k8s:	
+	@echo "Restarting K8S Cluster..."
+	/bin/bash ./deployment/setup/k8s/init_master.sh
+
+# Deployment
+deployment_k8s:
+	@echo "Deploying the application with YAML files..."
+	kubectl apply -f ./deployment/
+
+# Rollout new docker images
+update_docker_imgs:
+	@echo "Rollout new Docker images"
+	kubectl rollout restart deployment hgtp-frontend hgtp-backend reverse-proxy
 
 .PHONY: release clean build_local build_rel push
 
