@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo kubeadm reset -f
+sudo kubeadm reset -f --cri-socket unix:///var/run/cri-dockerd.sock
 
 sudo rm -rf /etc/cni /etc/kubernetes /var/lib/dockershim /var/lib/etcd /var/lib/kubelet /var/run/kubernetes ~/.kube/*
 

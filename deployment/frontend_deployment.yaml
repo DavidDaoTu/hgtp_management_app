@@ -22,7 +22,7 @@ spec:
           # image: davidfullstack/hgtp_frontend_img:latest
           # imagePullPolicy: Always
           ### For local development
-          image: hgtp_frontend_img
+          image: local/hgtp_frontend_img:v1.0.1
           imagePullPolicy: IfNotPresent
           resources:
             requests:
