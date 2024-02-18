@@ -11,7 +11,7 @@ import { apiRequest } from "utils/apiAxios";
 import dateFormat from "dateformat";
 
 const today = new Date();
-const thisMonth = dateFormat(today, "mmmm").toUpperCase();
+const thisMonth = dateFormat(today, "mm").toUpperCase();
 const thisMonthNum = today.getMonth() + 1;
 const thisYearNum = today.getFullYear();
 
@@ -73,7 +73,7 @@ const stats = [
     },
     {
         id: 4,
-        title: `REVENUE ( ${thisMonth} ${thisYearNum})`,
+        title: `REVENUE ( THÁNG ${thisMonth} ${thisYearNum})`,
         menu: [],
         query: `totalRevenueByMonth?month=${thisMonthNum}&year=${thisYearNum}`,
         isMoney: true,
@@ -91,7 +91,7 @@ const stats = [
     },
     {
         id: 5,
-        title: `PROFITS ( ${thisMonth} ${thisYearNum})`,
+        title: `PROFITS ( THÁNG ${thisMonth} ${thisYearNum})`,
         menu: [],
         query: `totalProfitsByMonth?month=${thisMonthNum}&year=${thisYearNum}`,
         isMoney: true,
@@ -189,7 +189,7 @@ const Analytics = () => {
                         />
                     ) : (
                         <Chart
-                            title={`Product analysis by month ${thisYearNum}`}
+                            title={`Thống kê tổng số cont theo tháng trong năm ${thisYearNum}`}
                             aspect={2 / 1}
                             data={dataProductChart}
                             initChart="LineChart"
@@ -210,7 +210,7 @@ const Analytics = () => {
                         />
                     ) : (
                         <Chart
-                            title={`Profits analysis by month ${thisYearNum}`}
+                            title={`Thống kê lợi nhuận theo tháng trong năm ${thisYearNum}`}
                             aspect={2 / 1}
                             data={dataProfitChart}
                             initChart="BarChart"
@@ -233,7 +233,7 @@ const Analytics = () => {
                         />
                     ) : (
                         <Chart
-                            title={`Category analysis by month ${thisYearNum}`}
+                            title={`Thống kê phân loại hàng theo tháng trong năm ${thisYearNum}`}
                             aspect={2 / 1}
                             data={dataCategoryChart}
                             initChart="LineChart"
@@ -254,7 +254,7 @@ const Analytics = () => {
                         />
                     ) : (
                         <Chart
-                            title={`Profits Per Category analysis by month ${thisYearNum}`}
+                            title={`Lợi nhuận theo phân loại hàng theo tháng trong năm ${thisYearNum}`}
                             aspect={2 / 1}
                             data={dataProfitCategoryChart}
                             initChart="LineChart"

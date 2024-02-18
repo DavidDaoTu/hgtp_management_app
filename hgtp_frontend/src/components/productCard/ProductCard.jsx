@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "utils/apiAxios";
 import dateFormat from "dateformat";
 import defaultImage from "assets/images/no-image.jpg";
+import { getStatusMessage } from "utils/common";
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate();
@@ -101,7 +102,7 @@ const ProductCard = ({ product }) => {
                     {product?.saleDate && (
                         <div className="itemDetail">
                             <span>
-                                {"Sale Date: "}
+                                {"Ngày bán: "}
                                 {dateFormat(product?.saleDate, "dd-mm-yyyy")}
                             </span>
                         </div>
@@ -109,7 +110,7 @@ const ProductCard = ({ product }) => {
                     {product?.arrivalDate && (
                         <div className="itemDetail">
                             <span>
-                                {"Arrival Date: "}
+                                {"Ngày hàng về: "}
                                 {dateFormat(product?.arrivalDate, "dd-mm-yyyy")}
                             </span>
                         </div>
@@ -117,7 +118,7 @@ const ProductCard = ({ product }) => {
                     {product?.deliveryDate && (
                         <div className="itemDetail">
                             <span>
-                                {"Delivery Date: "}
+                                {"Ngày giao hàng: "}
                                 {dateFormat(
                                     product?.deliveryDate,
                                     "dd-mm-yyyy"
@@ -127,18 +128,18 @@ const ProductCard = ({ product }) => {
                     )}
                     {product?.port && (
                         <div className="itemDetail">
-                            <span>Port: {product?.port}</span>
+                            <span>Cảng: {product?.port}</span>
                         </div>
                     )}
                     {product?.document && (
                         <div className="itemDetail">
-                            <span>Document: {product?.document}</span>
+                            <span>Bill: {product?.document}</span>
                         </div>
                     )}
                     {product?.status && (
                         <div className="itemDetail">
                             <span className={`status ${product?.status}`}>
-                                {product.status}
+                                {getStatusMessage(product.status)}
                             </span>
                         </div>
                     )}
