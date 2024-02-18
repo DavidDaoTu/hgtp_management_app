@@ -207,9 +207,9 @@ const productInputs = [
         type: "select",
         required: true,
         options: [
-            { value: "pending", title: "pending" },
-            { value: "sold", title: "sold" },
-            { value: "done", title: "done" },
+            { value: "pending", title: "Tồn kho" },
+            { value: "sold", title: "Đã bán" },
+            { value: "done", title: "Giao thành công" },
         ],
     },
 ];
