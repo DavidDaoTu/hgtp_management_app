@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "utils/apiAxios";
 import dateFormat from "dateformat";
 import defaultImage from "assets/images/no-image.jpg";
+import { getStatusMessage } from "utils/common";
 
 const ProductCard = ({ product }) => {
     const navigate = useNavigate();
@@ -138,7 +139,7 @@ const ProductCard = ({ product }) => {
                     {product?.status && (
                         <div className="itemDetail">
                             <span className={`status ${product?.status}`}>
-                                {product.status}
+                                {getStatusMessage(product.status)}
                             </span>
                         </div>
                     )}

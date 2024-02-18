@@ -8,6 +8,7 @@ import dateFormat from "dateformat";
 import * as XLSX from "xlsx";
 import fileExcel from "assets/files/default.xlsx";
 import { getDateFromExcelDateNumber } from "utils/format.helper";
+import { getStatusMessage } from "utils/common";
 
 const productColumns = [
   {
@@ -78,7 +79,9 @@ const productColumns = [
     flex: 1,
     renderCell: (params) => {
       return (
-        <div className={`status ${params.row.status}`}>{params.row.status}</div>
+        <div className={`status ${params.row.status}`}>
+          {getStatusMessage(params.row.status)}
+        </div>
       );
     },
   },

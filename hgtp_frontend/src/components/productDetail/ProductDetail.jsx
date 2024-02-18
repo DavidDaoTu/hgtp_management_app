@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { apiRequest } from "utils/apiAxios";
 import defaultImage from "assets/images/no-image.jpg";
 import dateFormat from "dateformat";
+import { getStatusMessage } from "utils/common";
 
 const ProductDetail = ({ product }) => {
     const { isLoading, error, data } = useQuery({
@@ -85,7 +86,7 @@ const ProductDetail = ({ product }) => {
                 {product?.status && (
                     <div className="itemDetail">
                         <span className={`status ${product?.status}`}>
-                            {product?.status}
+                            {getStatusMessage(product?.status)}
                         </span>
                     </div>
                 )}
