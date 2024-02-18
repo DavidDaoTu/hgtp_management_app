@@ -34,10 +34,12 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          # Node's hostname! 
           # TODO: Remember to change this to the real deployed hostname
-          #- tudao-ideapad-5-pro-14iap7 
-          - admin
+          ### Node's hostname! For production release
+          # - admin
+          ### For local development, 
+          ### use your machine hostname by the command: $ hostname
+          - tudao-ideapad-5-pro-14iap7 
 ---
 # Step 2: Declare Persistent Volume Claims
 apiVersion: v1

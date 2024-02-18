@@ -13,6 +13,7 @@ const userColumns = [
     },
     {
         field: "username",
+        // headerName: "User",
         headerName: "User",
         flex: 1,
         renderCell: (params) => {
@@ -21,7 +22,8 @@ const userColumns = [
     },
     {
         field: "name",
-        headerName: "Name",
+        // headerName: "Name",
+        headerName: "Tên",
         flex: 1,
     },
     {
@@ -31,12 +33,14 @@ const userColumns = [
     },
     {
         field: "phone",
-        headerName: "Phone",
+        // headerName: "Phone",
+        headerName: "SĐT",
         flex: 1,
     },
     {
         field: "birthday",
-        headerName: "Birthday",
+        // headerName: "Birthday",
+        headerName: "Ngày sinh nhật",
         flex: 1,
         renderCell: (params) => {
             return params.row.birthday ? (
@@ -71,8 +75,8 @@ const Users = () => {
             const res = await apiRequest.get(`/users`);
             const users = res.data?.map((data, index) => {
                 return {
-                    id: index + 1,
                     ...data,
+                    id: index + 1,
                 };
             });
             return users;
@@ -82,7 +86,7 @@ const Users = () => {
     return (
         <div className="users">
             <div className="usersTop">
-                <h1 className="title">All Users</h1>
+                <h1 className="title">Tất cả User</h1>
                 <button
                     onClick={() => {
                         navigate(`/users/new`);

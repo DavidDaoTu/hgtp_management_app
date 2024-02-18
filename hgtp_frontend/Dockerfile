@@ -27,8 +27,10 @@ FROM nginx:alpine
 ### Reference for connecting Frontend to Backend 
 # 1. https://github.com/kubernetes/website/blob/main/content/en/examples/service/access/Dockerfile
 # 2. https://kubernetes.io/docs/tasks/access-application-cluster/connecting-frontend-backend/
+## Default
 # RUN rm /etc/nginx/conf.d/default.conf
 # COPY frontend-nginx.conf /etc/nginx/conf.d
+## custom
 # COPY frontend-nginx.conf /etc/nginx/nginx.conf
 
 ## Copy frontend's build folder to nginx server's default folder

@@ -204,6 +204,7 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const productId = req.params.productId;
+
     try {
         // Find if product already exists
         const productExists = await Product.findOne({
@@ -222,12 +223,14 @@ const updateProduct = async (req, res) => {
             { productId: productId },
             {
                 $set: {
-                    updatedBy: req.userId,
                     ...req.body,
+                    updatedBy: req.userId,
+                    cover: req.image,
+                    images: req.image,
                 },
             }
         );
-        return res.status(202).json("Update successful");
+        return res.status(200).json("Update successful");
     } catch (err) {
         return res.status(500).json(err.message);
     }

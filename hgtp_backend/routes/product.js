@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ProductController = require("../controllers/ProductController");
 const multer = require("../middlewares/Multer");
+const { cloudinaryUpload } = require("../middlewares/CloudinaryUpload");
 
 router.get("/", ProductController.getAllProducts);
 router.get("/:productId", ProductController.getProduct);
@@ -15,11 +16,13 @@ router.post("/", multer.single("image"), ProductController.createProduct);
 router.put(
     "/:productId",
     multer.single("image"),
+    cloudinaryUpload,
     ProductController.updateProduct
 );
 router.patch(
     "/:productId",
     multer.single("image"),
+    cloudinaryUpload,
     ProductController.updateProduct
 );
 router.delete("/:productId", ProductController.deleteProduct);

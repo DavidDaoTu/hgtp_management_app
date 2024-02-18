@@ -20,8 +20,12 @@ spec:
     spec:
       containers:
         - name: reverse-proxy-nginx
-          image: davidfullstack/hgtp_reverse_proxy_img:latest
-          imagePullPolicy: Always
+          ### For production release
+          # image: davidfullstack/hgtp_reverse_proxy_img:latest
+          # imagePullPolicy: Always
+          ### For local development
+          image: local/hgtp_reverse_proxy_img:v1.0.1
+          imagePullPolicy: IfNotPresent
           resources:
             requests:
               memory: "64Mi"

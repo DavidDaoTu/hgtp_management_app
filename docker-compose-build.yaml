@@ -7,14 +7,17 @@ services:
   reverseproxy:
     build:
       context: ./hgtp_reverse_proxy
-    image: davidfullstack/hgtp_reverse_proxy_img:latest
+    #image: davidfullstack/hgtp_reverse_proxy_img:latest
+    image: ${REGISTRY}/hgtp_reverse_proxy_img:${VERSION}
 
   backend:
     build:
       context: ./hgtp_backend
-    image: davidfullstack/hgtp_backend_img:latest
+    # image: davidfullstack/hgtp_backend_img:latest
+    image: ${REGISTRY}/hgtp_backend_img:${VERSION}
 
   frontend:
     build:
       context: ./hgtp_frontend
-    image: davidfullstack/hgtp_frontend_img:latest
+    # image: davidfullstack/hgtp_frontend_img:latest
+    image: ${REGISTRY}/hgtp_frontend_img:${VERSION}

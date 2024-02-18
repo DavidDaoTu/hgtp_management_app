@@ -5,8 +5,8 @@ const multer = require("../middlewares/Multer");
 const { verifyAdmin } = require("../middlewares/PermissionHandler");
 const { cloudinaryUpload } = require("../middlewares/CloudinaryUpload");
 
-router.get("/", UserController.getAllUser);
-router.get("/:id", UserController.getUser);
+router.get("/", verifyAdmin, UserController.getAllUser);
+router.get("/:id", verifyAdmin, UserController.getUser);
 router.get("/profile/:username", UserController.getUserByUsername);
 
 router.post(

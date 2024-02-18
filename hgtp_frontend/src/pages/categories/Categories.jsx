@@ -12,12 +12,14 @@ const categoryColumns = [
     },
     {
         field: "title",
-        headerName: "Title",
+        // headerName: "Title",
+        headerName: "Loại gỗ",
         flex: 1,
     },
     {
         field: "desc",
-        headerName: "Descriptions",
+        // headerName: "Descriptions",
+        headerName: "Mô tả",
         flex: 3,
     },
 ];
