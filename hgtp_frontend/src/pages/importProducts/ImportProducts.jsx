@@ -175,9 +175,14 @@ const Products = () => {
           mutatePut({ id: value.productId, formData: value });
         }
       } catch (error) {
-        if (error.response.status === 404) {
-          mutatePost(value);
-        }
+
+        console.log(error)
+        mutatePost(value); // Continue to POST a new product to DB
+        
+        // Due to NginX configuration, can't use "error.response"
+        // if (error.response.status === 404) {
+        //   mutatePost(value);
+        // }
       }
     });
   };
