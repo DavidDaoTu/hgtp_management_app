@@ -9,10 +9,10 @@
 #### Build Docker images for local development & release phases
 
 # Usage:
-#   $ make dev
-#   $ make deploy
-#	$ make update
-#   $ make release [VERSION=6] [REGISTRY="davidfullstack"]
+#   $ make build_dev 	#Build local_img for development test
+#   $ make deploy		#Restart & deploy K8S YAML files on local machine
+#	$ make update		#Update & restart Pods images
+#   $ make release [VERSION=6] [REGISTRY="davidfullstack"]	#Build & Push for release
 ####
 
 VERSION?=v1.0.1
@@ -23,19 +23,19 @@ current_branch:=`git branch --show-current`
 commit_id:=`git rev-parse HEAD`
 
 # Local build for development
-dev: clean local_env build
+build_dev: clean local_env build
 # Build for release then push to DockerHub registry
 release: clean release_env build push
 # Restart & deploy K8S YAML files
-deploy: reset_k8s restart_k8s dev deployment_k8s
+deploy: reset_k8s restart_k8s build_dev deployment_k8s
 # Update Docker images for K8S Deployments
-update: dev update_docker_imgs
+update: build_dev update_docker_imgs
 
 # Add Docker compose environment variables into .env file for local development
 local_env:
 	@echo "### LOCAL DEVELOPMENT ###" > .env
 	@echo "VERSION=${VERSION}\r\nREGISTRY=local" >> .env 
-	@echo "Building Docker images for local dev: image version '$(VERSION)'..."
+	@echo "Building local Docker images for local development: image version '$(VERSION)'..."
 
 # Add Docker compose environment variables into .env file for release
 release_env:
@@ -43,7 +43,7 @@ release_env:
 	@echo "VERSION=${VERSION}\r\nREGISTRY=${DOCKERHUB}" >> .env 
 	@echo "Building Docker images for release: image version '$(VERSION)' with remote '$(DOCKERHUB)'..."
 
-# Common Docker compose build for local dev & release
+# Common Docker compose build for local build_dev & release
 build:
 	@echo "-----------" >> .env
 	@echo "#Current Branch: ${current_branch}\r\n#Current Commit ID: ${commit_id}" >> .env

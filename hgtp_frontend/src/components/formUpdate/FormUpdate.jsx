@@ -7,6 +7,7 @@ import { apiRequest } from "utils/apiAxios";
 import { formReducer } from "utils/formReducer";
 import defaultImage from "assets/images/no-image.jpg";
 import dateFormat from "dateformat";
+import {validateProductForm} from 'utils/formValidtion'
 
 const FormUpdate = ({ inputs, image, obj, route, id }) => {
     const navigate = useNavigate();
@@ -22,15 +23,38 @@ const FormUpdate = ({ inputs, image, obj, route, id }) => {
     });
     const [file, setFile] = useState(obj?.image);
     const [isSuccess, setIsSuccess] = useState(false);
+    // errors state for validating input fields
+    const [errorState, setError] = useState({
+        fieldName: '',
+        errReason: '',
+      });
 
     const queryClient = useQueryClient();
 
     const handleChange = (e) => {
         e.preventDefault();
+        
+        const inputField = {
+            fieldName: e.target.name,
+            fieldValue: e.target.value,
+            err: errorState
+        }
+        // Inputs validation
+        if (validateProductForm(inputField)) { 
+            // if validation passed
+            // Reset error
+            setError({})
+        } else { 
+            // if validation failed
+            // Set Error State
+            setError(errorState)      
+        }
+
         dispatch({
             type: "CHANGE_INPUT",
             payload: { name: e.target.name, value: e.target.value },
         });
+        
     };
 
     const handleUpload = async (e) => {
@@ -92,6 +116,13 @@ const FormUpdate = ({ inputs, image, obj, route, id }) => {
                     <div className="success">Update Successful</div>
                     <EastOutlined className="icon" />
                 </div>
+                <div 
+                    className="error-msg"
+                    style={{display: errorState.fieldName ? "flex" : "none"}}
+                >
+                    {errorState.fieldName} :  {errorState.errReason}
+                </div>
+                
                 <div className="bottom">
                     {image && (
                         <div className="left">
