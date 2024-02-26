@@ -6,6 +6,7 @@ import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { apiRequest, cloudinaryUpload } from "utils/apiAxios";
 import { formReducer, initialState } from "utils/formReducer";
 import defaultImage from "assets/images/no-image.jpg";
+import {validateProductForm} from 'utils/formValidtion'
 
 const FormProduct = ({ inputs }) => {
     const [formObject, dispatch] = useReducer(formReducer, initialState);
@@ -13,14 +14,36 @@ const FormProduct = ({ inputs }) => {
     const [uploading, setUploading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
+    // errors states for validating input fields
+    const [errorState, setError] = useState({
+        fieldName: '',
+        errReason: '',
+    })
+
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
     const handleChange = (e) => {
         e.preventDefault();
+        const inputField = {
+            fieldName: e.target.name,
+            fieldValue: e.target.value,
+            err: errorState
+        }
+        // Inputs validation
+        if (validateProductForm(inputField)) { 
+            // if validation passed
+            // Reset error
+            setError({})
+        } else { 
+            // if validation failed
+            // Set Error State
+            setError(errorState)      
+        }
+
         dispatch({
             type: "CHANGE_INPUT",
-            payload: { name: e.target.name, value: e.target.value },
+            payload: { name: inputField.fieldName, value: inputField.fieldValue },
         });
     };
 
@@ -80,6 +103,12 @@ const FormProduct = ({ inputs }) => {
                 >
                     <div className="success">Create Successful</div>
                     <EastOutlined className="icon" />
+                </div>
+                <div 
+                    className="error-msg"
+                    style={{display: errorState.fieldName ? "flex" : "none"}}
+                >
+                    {errorState.fieldName} :  {errorState.errReason} !!!
                 </div>
                 <div className="bottom">
                     <div className="left">

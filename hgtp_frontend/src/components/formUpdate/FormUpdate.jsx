@@ -27,7 +27,7 @@ const FormUpdate = ({ inputs, image, obj, route, id }) => {
     const [errorState, setError] = useState({
         fieldName: '',
         errReason: '',
-      });
+    });
 
     const queryClient = useQueryClient();
 
@@ -52,7 +52,7 @@ const FormUpdate = ({ inputs, image, obj, route, id }) => {
 
         dispatch({
             type: "CHANGE_INPUT",
-            payload: { name: e.target.name, value: e.target.value },
+            payload: { name: inputField.fieldName, value: inputField.fieldValue },
         });
         
     };
@@ -120,7 +120,7 @@ const FormUpdate = ({ inputs, image, obj, route, id }) => {
                     className="error-msg"
                     style={{display: errorState.fieldName ? "flex" : "none"}}
                 >
-                    {errorState.fieldName} :  {errorState.errReason}
+                    {errorState.fieldName} :  {errorState.errReason} !!!
                 </div>
                 
                 <div className="bottom">

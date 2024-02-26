@@ -25,12 +25,10 @@ const validateProductForm = ({fieldName, fieldValue, err}) => {
                     err.fieldName = "Cảnh báo độ dài"
                     err.errReason = 'Mã cont chưa đủ 11 ký tự'
                     return false
-                } else {
-                    if (!cont_pattern.test(fieldValue)) {
-                        err.fieldName = "Lỗi định dạng"
-                        err.errReason = 'Mã cont phải bắt đầu 4 chữ cái đầu và 7 số đuôi'
-                        return false
-                    }
+                } else if (!cont_pattern.test(fieldValue)) {
+                    err.fieldName = "Lỗi định dạng"
+                    err.errReason = 'Mã cont phải bắt đầu 4 chữ cái đầu và 7 số đuôi'
+                    return false
                 }
             }
             break;
