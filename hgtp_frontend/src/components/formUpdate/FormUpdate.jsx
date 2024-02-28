@@ -42,12 +42,15 @@ const FormUpdate = ({ inputs, image, obj, route, id }) => {
         // Inputs validation
         if (validateProductForm(inputField)) { 
             // if validation passed
-            // Reset error
-            setInputErrors({})
+            // Reset errors of success inputs
+            const newInputErrors = inputErrors.map(e =>
+              e.name === inputField.fieldName ? {name: "", reason: ""} : e
+            )
+            setInputErrors(newInputErrors)
         } else { 
             // if validation failed
             // Set Error State
-            setInputErrors(inputErrors)      
+            setInputErrors(inputErrors)
         }
 
         dispatch({
@@ -114,11 +117,6 @@ const FormUpdate = ({ inputs, image, obj, route, id }) => {
             <div className="success">Update Successful</div>
             <EastOutlined className="icon" />
           </div>
-          <div className="error-msg" style={{display: inputErrors.name ? "flex" : "none"}}>
-              <div className="show">
-                {inputErrors.name} : {inputErrors.reason} !!!
-              </div>
-          </div>
 
           <div className="bottom">
             {image && (
@@ -164,15 +162,25 @@ const FormUpdate = ({ inputs, image, obj, route, id }) => {
                         ))}
                       </select>
                     ) : (
-                      <input
-                        id={value.name}
-                        name={value.name}
-                        type={value.type}
-                        placeholder={value.placeholder}
-                        value={formObject[value.name] || ""}
-                        onChange={(e) => handleChange(e)}
-                        required={value.required}
-                      />
+                      <div className="input-section">
+                        <input
+                          id={value.name}
+                          name={value.name}
+                          type={value.type}
+                          placeholder={value.placeholder}
+                          value={formObject[value.name] || ""}
+                          onChange={(e) => handleChange(e)}
+                          required={value.required}
+                        />
+                        <div 
+                            className="error-msg"
+                            style={{display: inputErrors.filter(e => e.name === value.name)[0] ? "flex" : "none"}}
+                        >
+                            <div className="show">
+                                {inputErrors.filter(e => e.name === value.name)[0]?.reason} 
+                            </div>
+                        </div> 
+                      </div>
                     )}
                   </div>
                 ))}
