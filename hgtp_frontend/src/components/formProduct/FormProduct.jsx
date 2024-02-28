@@ -15,10 +15,10 @@ const FormProduct = ({ inputs }) => {
     const [isSuccess, setIsSuccess] = useState(false);
 
     // errors states for validating input fields
-    const [errorState, setError] = useState({
-        fieldName: '',
-        errReason: '',
-    })
+    const [inputErrors, setInputErrors] = useState([{
+        name: '',
+        reason: '',
+    },]);
 
     const navigate = useNavigate();
     const queryClient = useQueryClient();
@@ -28,17 +28,17 @@ const FormProduct = ({ inputs }) => {
         const inputField = {
             fieldName: e.target.name,
             fieldValue: e.target.value,
-            err: errorState
+            err: inputErrors
         }
         // Inputs validation
         if (validateProductForm(inputField)) { 
             // if validation passed
             // Reset error
-            setError({})
+            setInputErrors({})
         } else { 
             // if validation failed
             // Set Error State
-            setError(errorState)      
+            setInputErrors(inputErrors)      
         }
 
         dispatch({
@@ -106,9 +106,11 @@ const FormProduct = ({ inputs }) => {
                 </div>
                 <div 
                     className="error-msg"
-                    style={{display: errorState.fieldName ? "flex" : "none"}}
+                    style={{display: inputErrors.name ? "flex" : "none"}}
                 >
-                    {errorState.fieldName} :  {errorState.errReason} !!!
+                    <div className="show">
+                        {inputErrors.name} :  {inputErrors.reason} !!!
+                    </div>
                 </div>
                 <div className="bottom">
                     <div className="left">

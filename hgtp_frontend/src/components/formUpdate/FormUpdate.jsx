@@ -24,10 +24,10 @@ const FormUpdate = ({ inputs, image, obj, route, id }) => {
     const [file, setFile] = useState(obj?.image);
     const [isSuccess, setIsSuccess] = useState(false);
     // errors state for validating input fields
-    const [errorState, setError] = useState({
-        fieldName: '',
-        errReason: '',
-    });
+    const [inputErrors, setInputErrors] = useState([{
+        name: '',
+        reason: '',
+    },]);
 
     const queryClient = useQueryClient();
 
@@ -37,17 +37,17 @@ const FormUpdate = ({ inputs, image, obj, route, id }) => {
         const inputField = {
             fieldName: e.target.name,
             fieldValue: e.target.value,
-            err: errorState
+            err: inputErrors
         }
         // Inputs validation
         if (validateProductForm(inputField)) { 
             // if validation passed
             // Reset error
-            setError({})
+            setInputErrors({})
         } else { 
             // if validation failed
             // Set Error State
-            setError(errorState)      
+            setInputErrors(inputErrors)      
         }
 
         dispatch({
@@ -100,107 +100,99 @@ const FormUpdate = ({ inputs, image, obj, route, id }) => {
     };
 
     return (
-        <div className="formUpdate">
-            <form action="" onSubmit={handleSubmit}>
-                <div
-                    className="top"
-                    style={{ display: isSuccess ? "flex" : "none" }}
-                    onClick={() => {
-                        route === "auth"
-                            ? navigate(`/${obj.username}`)
-                            : navigate(
-                                  `/${route}/${formObject.productId || id}`
-                              );
-                    }}
-                >
-                    <div className="success">Update Successful</div>
-                    <EastOutlined className="icon" />
-                </div>
-                <div 
-                    className="error-msg"
-                    style={{display: errorState.fieldName ? "flex" : "none"}}
-                >
-                    {errorState.fieldName} :  {errorState.errReason} !!!
-                </div>
-                
-                <div className="bottom">
-                    {image && (
-                        <div className="left">
-                            <div className="uploadImage">
-                                <label htmlFor="file">
-                                    <div className="formUpload">
-                                        <div>Upload Image </div>
-                                        <DriveFolderUploadOutlined className="icon" />
-                                    </div>
-                                    <img
-                                        src={file || defaultImage}
-                                        alt="avata"
-                                        htmlFor="file"
-                                    />
-                                </label>
-                                <input
-                                    type="file"
-                                    id="file"
-                                    onChange={(e) => handleUpload(e)}
-                                />
-                            </div>
-                        </div>
-                    )}
-                    <div className="right">
-                        <div className="formInput">
-                            {inputs?.map((value, index) => (
-                                <div className="input" key={index}>
-                                    <label>{value.label}</label>
-                                    {value.type === "select" ? (
-                                        <select
-                                            id={value.name}
-                                            name={value.name}
-                                            type={value.type}
-                                            value={formObject[value.name] || ""}
-                                            onChange={(e) => handleChange(e)}
-                                            required={value.required}
-                                        >
-                                            {value.options?.map(
-                                                (option, index) => (
-                                                    <option
-                                                        key={index}
-                                                        value={option.value}
-                                                    >
-                                                        {option.title}
-                                                    </option>
-                                                )
-                                            )}
-                                        </select>
-                                    ) : (
-                                        <input
-                                            id={value.name}
-                                            name={value.name}
-                                            type={value.type}
-                                            placeholder={value.placeholder}
-                                            value={formObject[value.name] || ""}
-                                            onChange={(e) => handleChange(e)}
-                                            required={value.required}
-                                        />
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                        <span className="error">
-                            {errorPut && errorPut.response.data.message}
-                        </span>
-                        <div className="sendButton">
-                            {isLoadingPut ? (
-                                <div className="button">Uploading...</div>
-                            ) : (
-                                <button type="submit" className="button">
-                                    Send
-                                </button>
-                            )}
-                        </div>
+      <div className="formUpdate">
+        <form action="" onSubmit={handleSubmit}>
+          <div
+            className="top"
+            style={{ display: isSuccess ? "flex" : "none" }}
+            onClick={() => {
+              route === "auth"
+                ? navigate(`/${obj.username}`)
+                : navigate(`/${route}/${formObject.productId || id}`);
+            }}
+          >
+            <div className="success">Update Successful</div>
+            <EastOutlined className="icon" />
+          </div>
+          <div className="error-msg" style={{display: inputErrors.name ? "flex" : "none"}}>
+              <div className="show">
+                {inputErrors.name} : {inputErrors.reason} !!!
+              </div>
+          </div>
+
+          <div className="bottom">
+            {image && (
+              <div className="left">
+                <div className="uploadImage">
+                  <label htmlFor="file">
+                    <div className="formUpload">
+                      <div>Upload Image </div>
+                      <DriveFolderUploadOutlined className="icon" />
                     </div>
+                    <img
+                      src={file || defaultImage}
+                      alt="avata"
+                      htmlFor="file"
+                    />
+                  </label>
+                  <input
+                    type="file"
+                    id="file"
+                    onChange={(e) => handleUpload(e)}
+                  />
                 </div>
-            </form>
-        </div>
+              </div>
+            )}
+            <div className="right">
+              <div className="formInput">
+                {inputs?.map((value, index) => (
+                  <div className="input" key={index}>
+                    <label>{value.label}</label>
+                    {value.type === "select" ? (
+                      <select
+                        id={value.name}
+                        name={value.name}
+                        type={value.type}
+                        value={formObject[value.name] || ""}
+                        onChange={(e) => handleChange(e)}
+                        required={value.required}
+                      >
+                        {value.options?.map((option, index) => (
+                          <option key={index} value={option.value}>
+                            {option.title}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        id={value.name}
+                        name={value.name}
+                        type={value.type}
+                        placeholder={value.placeholder}
+                        value={formObject[value.name] || ""}
+                        onChange={(e) => handleChange(e)}
+                        required={value.required}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+              <span className="error">
+                {errorPut && errorPut.response.data.message}
+              </span>
+              <div className="sendButton">
+                {isLoadingPut ? (
+                  <div className="button">Uploading...</div>
+                ) : (
+                  <button type="submit" className="button">
+                    Send
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     );
 };
 
