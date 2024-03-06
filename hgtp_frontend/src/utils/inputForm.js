@@ -87,6 +87,7 @@ const productInputs = [
         placeholder: "Mã Cont",
         type: "text",
         required: true,
+        display: 'show'
     },
     {
         id: 2,
@@ -97,6 +98,7 @@ const productInputs = [
         placeholder: "Loại Hàng",
         type: "select",
         required: true,
+        display: 'show'
     },
     {
         id: 3,
@@ -106,6 +108,8 @@ const productInputs = [
         label: "Giá 1 Tấn (Triệu VNĐ)",
         placeholder: "Giá 1 Tấn",
         type: "text",
+        required: true,
+        display: 'hide'
     },
     {
         id: 4,
@@ -115,6 +119,8 @@ const productInputs = [
         label: "Tiền Đặt Cọc (Triệu VNĐ)",
         placeholder: "Cọc",
         type: "text",
+        required: true,
+        display: 'hide'
     },
     {
         id: 5,
@@ -124,6 +130,7 @@ const productInputs = [
         label: "Tổng tiền thu về (VNĐ)",
         placeholder: "Tổng tiền thu về (VNĐ)",
         type: "text",
+        display: 'hide'
     },
     {
         id: 6,
@@ -133,6 +140,7 @@ const productInputs = [
         label: "Ngày bán",
         placeholder: "Ngày bán",
         type: "date",
+        display: 'hide'
     },
     {
         id: 7,
@@ -142,6 +150,7 @@ const productInputs = [
         label: "Ngày hàng về",
         placeholder: "Ngày hàng về",
         type: "date",
+        display: 'hide'
     },
     {
         id: 8,
@@ -151,6 +160,7 @@ const productInputs = [
         label: "Ngày giao hàng",
         placeholder: "Ngày giao hàng",
         type: "date",
+        display: 'hide'
     },
     {
         id: 9,
@@ -160,6 +170,7 @@ const productInputs = [
         label: "Cảng",
         placeholder: "Cảng",
         type: "text",
+        display: 'hide'
     },
     {
         id: 10,
@@ -169,6 +180,7 @@ const productInputs = [
         label: "Bill",
         placeholder: "Bill",
         type: "text",
+        display: 'hide'
     },
     {
         id: 11,
@@ -178,6 +190,8 @@ const productInputs = [
         label: "Khách hàng",
         placeholder: "Khách hàng",
         type: "select",
+        required: true,
+        display: 'hide'
     },
     {
         id: 12,
@@ -187,6 +201,8 @@ const productInputs = [
         label: "Người bán",
         placeholder: "Người bán",
         type: "select",
+        required: true,
+        display: 'hide'
     },
     {
         id: 13,
@@ -196,6 +212,7 @@ const productInputs = [
         label: "Ghi chú",
         placeholder: "Ghi chú",
         type: "text",
+        display: 'show'
     },
     {
         id: 14,
@@ -209,8 +226,9 @@ const productInputs = [
         options: [
             { value: "pending", title: "Tồn kho" },
             { value: "sold", title: "Đã bán" },
-            { value: "done", title: "Giao thành công" },
+            // { value: "done", title: "Giao thành công" },
         ],
+        display: 'show'
     },
 ];
 

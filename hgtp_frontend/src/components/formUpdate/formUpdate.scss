@@ -27,6 +27,16 @@
             }
         }
 
+        .error-msg {
+            align-items: center;
+            justify-content: flex-start;
+            .show {                
+                font-size: 15px;
+                font-weight: bold;
+                color: red;
+            }
+        }
+
         .bottom {
             display: flex;
 
