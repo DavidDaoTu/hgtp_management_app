@@ -109,7 +109,7 @@ const Home = () => {
         queryFn: async () => {
             const res = await apiRequest.get(
                 `/products?status=pending&sortName=arrivalDate`
-            );
+            );            
             return res.data;
         },
     });
