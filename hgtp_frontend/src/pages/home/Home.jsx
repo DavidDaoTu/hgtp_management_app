@@ -110,6 +110,8 @@ const Home = () => {
             const res = await apiRequest.get(
                 `/products?status=pending&sortName=arrivalDate`
             );
+            console.log('res products = ')
+            console.table(res)
             return res.data;
         },
     });

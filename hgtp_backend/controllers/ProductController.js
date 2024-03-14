@@ -46,8 +46,9 @@ const getAllProducts = async (req, res) => {
     const dsc = q.sortOrder === "dsc" ? -1 : 1;
 
     try {
-        // Get all products with filters
+        // Get all products with filters and populate all related/ref objects
         const products = await Product.find(filters)
+            .populate('categoryId customerId sellerId')
             .select({ __v: 0, payment: 0 })
             .limit(q.limit)
             .sort({ [q.sortName]: dsc })

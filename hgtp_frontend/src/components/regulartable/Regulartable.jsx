@@ -18,6 +18,7 @@ const tableColumns = [
     "",
     "Cont",
     "Loại hàng",
+    "Thông tin  bán",
     "Giá bán",
     "Ngày về",
     "Cảng",
@@ -67,6 +68,9 @@ const Regulartable = ({ title, products, pageSize = 15 }) => {
                                                     {row.productId}
                                                 </Link>
                                             </div>
+                                        </TableCell>
+                                        <TableCell className="tableCell">
+                                            {row.categoryId && row.categoryId.title}
                                         </TableCell>
                                         <TableCell className="tableCell">
                                             {row.desc}
